@@ -1,0 +1,16 @@
+AblumID = 7064547 （大唐双龙传）
+
+如何找到声音信息：
+音频总专辑页上点播放，然后看Network中的XHR标签下的album?的标签，看Headers就可以找到url
+
+专辑信息：
+'https://www.ximalaya.com/revision/album/getTracksList?albumId={}&pageNum=1'.format(AlbumID)
+在专辑信息页的trackTotalCount标记可以找到音频数量
+
+声音信息：
+'https://www.ximalaya.com/revision/play/album?albumId={}&pageNum={}&pageSize=30'.format(AlbumID, page)
+在声音信息页找src标记可以找下声音地址
+
+
+headers:
+headers = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/67.0.3396.99 Safari/537.36"}
