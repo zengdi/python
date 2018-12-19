@@ -43,6 +43,7 @@ def getAudio(albumID, page):
             add = audio['src']
             name = audio['trackName']
             index = audio['index']
+            print(index,name)
             audio_info[index] = ({'name': name, 'add': add})
         return audio_info
 
@@ -70,7 +71,11 @@ def download(url, savePath, fileName):
 
 
 if __name__ == '__main__':
-    albumID = 7064547
+    # albumID = 7064547
+    # savePath = 'downloads/audios/'
+    albumID = input('Please input the album ID')
+    savePath = input('Please input save path')
+    audio_list_save = input('Please input the audio list name')
     albumInfo = getAlbumInfo(albumID)
     totalCount = albumInfo['data']['trackTotalCount']
     pages = getPages(totalCount)
@@ -80,13 +85,14 @@ if __name__ == '__main__':
         audios.update(data)
         time.sleep(2)
     downloads = pd.DataFrame.from_dict(audios, orient='index')
-    downloads.to_csv('downloads/audio_add.csv', mode='a+', header=False, encoding='utf-8')
-    savePath = 'downloads/audios/'
+    downloads.to_csv(os.path.join(savePath, audio_list_save + '.csv'),
+                     mode='a+', header=False, encoding='utf-8')
+
     i = 1
     for key in audios.keys():
         name = audios[key]['name']
         add = audios[key]['add']
-        download(add, savePath, str(key))
+        download(add, savePath, name.strip())
         time.sleep(2)
         print('Finshied %s', i / len(audios.keys()))
         i += 1
