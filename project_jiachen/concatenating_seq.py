@@ -34,7 +34,7 @@ class RebuildData(object):
             # print(os.path.join(basePath, file))
             file_name = file.split('.')[0]
             # print(file_name)
-            self.rebuilt_by_species(os.path.join(basePath, file), file_name)
+            self.rebuilt_by_species(os.path.join(self.basePath, file), file_name)
 
     def data_construction(self):
         self.get_sp_seqs()
@@ -56,7 +56,7 @@ class RebuildData(object):
             self.seqRecords.append(SeqRecord(id=name, seq=Seq(seq), name=name, description=des))
 
     def writeFasta(self):
-        resName = input('请输入文件名：')
+        resName = input('请输入结果文件名')
         SeqIO.write(self.seqRecords, resName, 'fasta')
 
     def showFileName(self):
@@ -78,13 +78,5 @@ class RebuildData(object):
 if __name__ == '__main__':
     basePath = 'data/'
     rd = RebuildData(basePath)
-    file = rd.showFileName()
-    sp = rd.getSpeciesName()
     record = rd.getseqRecod()
-    error_record = []
-    for re in record:
-        if len(re.seq) % 3 != 0:
-            error_record.append(re)
-    print(len(error_record))
-    SeqIO.write(error_record, 'error.fasta', 'fasta')
-    # rd.writeFasta()
+    SeqIO.write(record, 'res.fasta', 'fasta')
